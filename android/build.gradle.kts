@@ -119,7 +119,7 @@ publishing {
     publications {
         create<MavenPublication>(project.name) {
             artifact("build/outputs/prefab-aar/${project.name}-release.aar")
-            artifactId = "${project.name}-android"
+            artifactId = "${project.name.lowercase()}-android"
 
             pom {
                 distributionManagement {
