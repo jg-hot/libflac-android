@@ -290,12 +290,12 @@ static int chain_seek_cb_(FLAC__IOHandle handle, FLAC__int64 offset, int whence)
 {
 	FLAC__off_t o = (FLAC__off_t)offset;
 	FLAC__ASSERT(offset == o);
-	return fseeko((FILE*)handle, o, whence);
+	return fseek((FILE*)handle, o, whence);
 }
 
 static FLAC__int64 chain_tell_cb_(FLAC__IOHandle handle)
 {
-	return ftello((FILE*)handle);
+	return ftell((FILE*)handle);
 }
 
 static int chain_eof_cb_(FLAC__IOHandle handle)

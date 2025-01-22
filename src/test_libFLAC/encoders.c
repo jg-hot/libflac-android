@@ -121,7 +121,7 @@ static FLAC__StreamEncoderSeekStatus stream_encoder_seek_callback_(const FLAC__S
 {
 	FILE *f = (FILE*)client_data;
 	(void)encoder;
-	if(fseeko(f, (long)absolute_byte_offset, SEEK_SET) < 0)
+	if(fseek(f, (long)absolute_byte_offset, SEEK_SET) < 0)
 		return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
 	else
 		return FLAC__STREAM_ENCODER_SEEK_STATUS_OK;
@@ -132,7 +132,7 @@ static FLAC__StreamEncoderTellStatus stream_encoder_tell_callback_(const FLAC__S
 	FILE *f = (FILE*)client_data;
 	FLAC__off_t pos;
 	(void)encoder;
-	if((pos = ftello(f)) < 0)
+	if((pos = ftell(f)) < 0)
 		return FLAC__STREAM_ENCODER_TELL_STATUS_ERROR;
 	else {
 		*absolute_byte_offset = (FLAC__uint64)pos;

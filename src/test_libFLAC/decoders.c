@@ -173,7 +173,7 @@ static FLAC__StreamDecoderSeekStatus stream_decoder_seek_callback_(const FLAC__S
 	if(dcd->error_occurred)
 		return FLAC__STREAM_DECODER_SEEK_STATUS_ERROR;
 
-	if(fseeko(dcd->file, (FLAC__off_t)absolute_byte_offset, SEEK_SET) < 0) {
+	if(fseek(dcd->file, (FLAC__off_t)absolute_byte_offset, SEEK_SET) < 0) {
 		dcd->error_occurred = true;
 		return FLAC__STREAM_DECODER_SEEK_STATUS_ERROR;
 	}
@@ -196,7 +196,7 @@ static FLAC__StreamDecoderTellStatus stream_decoder_tell_callback_(const FLAC__S
 	if(dcd->error_occurred)
 		return FLAC__STREAM_DECODER_TELL_STATUS_ERROR;
 
-	offset = ftello(dcd->file);
+	offset = ftell(dcd->file);
 	*absolute_byte_offset = (FLAC__uint64)offset;
 
 	if(offset < 0) {
@@ -374,7 +374,7 @@ static FLAC__bool stream_decoder_test_respond_(FLAC__StreamDecoder *decoder, Str
 
 	dcd->current_metadata_number = 0;
 
-	if(dcd->layer < LAYER_FILE && fseeko(dcd->file, 0, SEEK_SET) < 0) {
+	if(dcd->layer < LAYER_FILE && fseek(dcd->file, 0, SEEK_SET) < 0) {
 		printf("FAILED rewinding input, errno = %d\n", errno);
 		return false;
 	}
@@ -640,7 +640,7 @@ static FLAC__bool test_stream_decoder(Layer layer, FLAC__bool is_ogg)
 		if(layer == LAYER_STREAM) {
 			/* after a reset() we have to rewind the input ourselves */
 			printf("rewinding input... ");
-			if(fseeko(decoder_client_data.file, 0, SEEK_SET) < 0) {
+			if(fseek(decoder_client_data.file, 0, SEEK_SET) < 0) {
 				printf("FAILED, errno = %d\n", errno);
 				return false;
 			}
